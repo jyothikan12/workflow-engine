@@ -1,127 +1,85 @@
-Data Quality Workflow Engine
+# 📘 **Data Quality Workflow Engine**
 
-A lightweight FastAPI-based workflow engine designed to automate data profiling, anomaly detection, rule generation, and iterative data cleaning through a node-based graph workflow.
+A lightweight **FastAPI-based workflow engine** designed for automated data profiling, anomaly detection, rule generation, and iterative data cleaning.
 
- What This Engine Does
+---
+
+# 🔍 **What This Engine Does**
 
 This engine automatically processes datasets by:
 
-Profiling numeric columns
+- **Profiling numeric columns**
+- **Detecting anomalies**, including:
+  - Missing values  
+  - Negative values  
+  - Outliers (IQR or Z-score)
+- **Generating cleaning rules**, such as:
+  - Median / Mean / Mode imputation
+  - Outlier replacement
+  - Negative value correction
+- **Applying rules until the dataset becomes clean**
+- **Supporting branching and loop conditions**
+- **Exposing clean REST APIs** for workflow automation
 
-Detecting anomalies such as:
+---
 
-Missing values
+# 🧠 **Best Suited For These Types of Datasets**
 
-Negative values
+The engine performs **most efficiently** on:
 
-Outliers (using IQR or Z-Score)
+### ✔ Structured numeric datasets  
+CSV-like tabular data.
 
-Auto-generating cleaning rules:
+### ✔ Sensor / IoT datasets  
+Examples:  
+- temperature  
+- humidity  
+- voltage  
+- pressure  
 
-Mean / Median / Mode imputation
+### ✔ Financial & operational datasets  
+Examples:  
+- revenue  
+- transaction amounts  
+- cost metrics  
 
-Outlier replacement
+### ✔ Telemetry / monitoring datasets  
+Examples:  
+- CPU usage  
+- response time  
+- memory load  
 
-Negative value correction
+---
 
-Applying rules iteratively until the dataset becomes clean
+## ❌ **Not Ideal For**
 
-Supporting branching conditions & loops
+- Text-heavy datasets  
+- Images / audio  
+- Free-form or unstructured datasets  
 
-Exposing simple HTTP APIs to run workflows dynamically
+---
 
- Best Suited For These Types of Datasets
+# 🚀 **API Endpoints**
 
-The engine works most efficiently with:
+## **1️⃣ Create Workflow**
+Creates a new workflow and returns a **graph_id**.
 
-✔ Structured numeric datasets
+---
 
-Ideal for tabular CSV-like data.
+## **2️⃣ Run Workflow**
 
-✔ Sensor / IoT datasets
+Runs the workflow with your input dataset and returns:
 
-Examples:
+- Final **cleaned data**
+- **Anomaly summary**
+- **Rules generated**
+- **Execution logs**
 
-temperature
+---
 
-humidity
-
-pressure
-
-voltage
-
-These datasets commonly contain noise and missing values.
-
-✔ Financial & operational datasets
-
-Examples:
-
-transaction amounts
-
-salaries
-
-production values
-
-✔ Telemetry / system monitoring datasets
-
-Examples:
-
-CPU usage
-
-response time
-
-latency
-
- Not Ideal For
-
-Free-text datasets
-
-Images, audio, or unstructured content
-
-Deeply nested JSON data
-
-API Endpoints
-Create Workflow
-POST /workflow/create
-
-
-Creates a new workflow and returns a graph_id.
-
-Run Workflow
-POST /workflow/run
-
-
-Executes the workflow using your input dataset and returns:
-
-Cleaned data
-
-Applied rules
-
-Anomalies detected
-
-Execution logs
-
-▶ Running Locally
+# ▶ **Running the Project Locally**
 
 Start the FastAPI server:
 
+```bash
 uvicorn app.main:app --reload
-
-
-Open interactive API docs:
-
-🔗 http://127.0.0.1:8000/docs
-
-What Could Be Added With More Time
-
-Workflow & run storage in a database
-
-WebSockets for real-time execution logs
-
-Background task support
-
-Visual graph editor for workflows
-
-Custom user-defined nodes via API
-
-Authentication & role-based access
