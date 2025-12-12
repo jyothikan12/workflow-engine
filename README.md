@@ -1,87 +1,127 @@
 Data Quality Workflow Engine
 
-A FastAPI-powered workflow engine that:
+A lightweight FastAPI-based workflow engine designed to automate data profiling, anomaly detection, rule generation, and iterative data cleaning through a node-based graph workflow.
 
-Profiles data
+ What This Engine Does
 
-Detects anomalies
+This engine automatically processes datasets by:
 
-Generates rules (imputation, outlier fixes, negative fixes)
+Profiling numeric columns
 
-Applies rules until data becomes clean
+Detecting anomalies such as:
 
-Supports branching and loop conditions
+Missing values
 
-Provides workflow creation and execution APIs
+Negative values
+
+Outliers (using IQR or Z-Score)
+
+Auto-generating cleaning rules:
+
+Mean / Median / Mode imputation
+
+Outlier replacement
+
+Negative value correction
+
+Applying rules iteratively until the dataset becomes clean
+
+Supporting branching conditions & loops
+
+Exposing simple HTTP APIs to run workflows dynamically
+
+ Best Suited For These Types of Datasets
+
+The engine works most efficiently with:
+
+✔ Structured numeric datasets
+
+Ideal for tabular CSV-like data.
+
+✔ Sensor / IoT datasets
+
+Examples:
+
+temperature
+
+humidity
+
+pressure
+
+voltage
+
+These datasets commonly contain noise and missing values.
+
+✔ Financial & operational datasets
+
+Examples:
+
+transaction amounts
+
+salaries
+
+production values
+
+✔ Telemetry / system monitoring datasets
+
+Examples:
+
+CPU usage
+
+response time
+
+latency
+
+ Not Ideal For
+
+Free-text datasets
+
+Images, audio, or unstructured content
+
+Deeply nested JSON data
 
 API Endpoints
 Create Workflow
-
 POST /workflow/create
-Creates a new data quality workflow and returns a graph_id.
+
+
+Creates a new workflow and returns a graph_id.
 
 Run Workflow
-
 POST /workflow/run
-Runs the workflow using your input data and returns:
 
-Final cleaned data
 
-Anomaly summary
+Executes the workflow using your input dataset and returns:
 
-Rules applied
+Cleaned data
+
+Applied rules
+
+Anomalies detected
 
 Execution logs
 
-Running Locally
+▶ Running Locally
+
+Start the FastAPI server:
+
 uvicorn app.main:app --reload
 
 
-Once running, you can open interactive docs:
+Open interactive API docs:
 
 🔗 http://127.0.0.1:8000/docs
 
-Project Structure
-app/
-  ├── main.py                # FastAPI entrypoint
-  ├── engine/
-  │     ├── runner.py        # Graph runner (state → transitions → loop)
-  │     └── registry.py      # Node registry
-  ├── registry/
-  │     └── tools.py         # Profiling, anomaly detection, rule generation
-  └── workflows/
-        └── data_quality.py  # Example workflow
+What Could Be Added With More Time
 
-What the Workflow Engine Supports
+Workflow & run storage in a database
 
-Node-based workflow execution
+WebSockets for real-time execution logs
 
-Shared state passed between nodes
+Background task support
 
-Looping until anomalies = 0
+Visual graph editor for workflows
 
-Conditional branching
+Custom user-defined nodes via API
 
-Missing-value detection + imputation
-
-Negative-value detection + fix
-
-Outlier detection (IQR or Z-score)
-
-Auto rule generation + application
-
-Clean and simple HTTP API
-
-Future Improvements (If More Time Is Available)
-
-Store workflow definitions & runs in a database
-
-WebSockets for live workflow logs
-
-Background tasks for long-running workflows
-
-Graph visualization UI
-
-Allow user-created custom nodes via API
-
-Authentication & multi-user workflow isolation
+Authentication & role-based access
